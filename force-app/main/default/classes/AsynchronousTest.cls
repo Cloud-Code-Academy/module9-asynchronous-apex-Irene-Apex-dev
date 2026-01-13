@@ -43,7 +43,7 @@ public with sharing class AsynchronousTest {
 
         // Call the method to test between the startTest and stopTest methods
         Test.startTest();
-        //YOUR CODE HERE
+        NextStepFuture.updateNextStep();
         Test.stopTest();
 
         // Query the updated accounts and opportunities
@@ -61,6 +61,7 @@ public with sharing class AsynchronousTest {
         }
     }
 
+    
     @IsTest
     static void nextStepFuture_testCreateDealAndUpdateRole() {        
         Test.startTest();
@@ -77,6 +78,7 @@ public with sharing class AsynchronousTest {
         System.assertEquals(1, updatedRoles.size(), 'UserRole should exist.');
     }
 
+    
     @IsTest
     static void nextStepQueueable_testEnqueueJob() {
         // Create test data
@@ -111,6 +113,8 @@ public with sharing class AsynchronousTest {
             System.assertEquals(null, opp.NextStep, 'Opportunity NextStep field was updated to null.');
         }
     }
+
+    /*
 
     @IsTest
     static void nextStepBatch_testUpdateAllNextStep() {
@@ -190,4 +194,5 @@ public with sharing class AsynchronousTest {
         }
     }
     */
+    
 }

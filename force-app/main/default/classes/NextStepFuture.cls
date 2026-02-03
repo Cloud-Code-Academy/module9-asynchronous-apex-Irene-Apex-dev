@@ -27,9 +27,31 @@ public with sharing class NextStepFuture {
      * Opportunity Next Step field is a standard field
      * Update the corresponding test class AsynchronousTest and test method nextStepFuture_testUpdateAllNextStep to cover test this method
      */
-    //[public | private ] [static] data_type method_name (input parameters) {
-    //  The body of the method
-    //}
+    @future
+    public static void updateNextStep () {
+        List<Account> accounts = [
+            SELECT Id, Name, Next_Step__c 
+            FROM Account
+        ];
+
+        for (Account account : accounts) {
+            account.Next_Step__c = 'Meeting in the future';
+        }
+
+        update accounts;
+
+
+        List<Opportunity> opps = [
+            SELECT Id, Name, NextStep 
+            FROM Opportunity
+        ];
+
+        for (Opportunity opp : opps) {
+            opp.NextStep = 'Meeting in the future';
+        }
+
+        update opps;
+    }
 
     /*
     * Question 2
@@ -43,7 +65,10 @@ public with sharing class NextStepFuture {
         insertBigDeal(bigDeal);
 
         UserRole[] roles = [SELECT Id, Name FROM UserRole WHERE Id = :UserInfo.getUserRoleId() OR Name = 'CRO' LIMIT 1];
-        updateUserRoleName(roles);
+        //updateUserRoleName(roles); 
+        String jsonString = JSON.serialize(roles);
+        updateUserRoleName(jsonString); 
+   
     }
 
     // Helper method to insert big deal
@@ -56,9 +81,12 @@ public with sharing class NextStepFuture {
         insert opp;
     }
 
-
     // Helper method to update role name
-    private static void updateUserRoleName(UserRole[] roles){
+    //private static void updateUserRoleName(UserRole[] roles){
+    @future
+    private static void updateUserRoleName(String jsonString){
+        List<UserRole> roles = (List<UserRole>)JSON.deserialize(jsonString, List<UserRole>.class);
+
         UserRole role;
         if (roles.isEmpty()) {
             role = new UserRole();
@@ -73,4 +101,5 @@ public with sharing class NextStepFuture {
 
         upsert role;
     }
+
 }

@@ -46,7 +46,7 @@ public with sharing class NextStepBatch implements Database.Batchable<sObject>{
             SELECT Id, NextStep
             FROM Opportunity
             WHERE AccountId in :scope
-            ];
+        ];
 
         List<Opportunity> updateOpps = new List<Opportunity>();
         // Loop through the opportunity records

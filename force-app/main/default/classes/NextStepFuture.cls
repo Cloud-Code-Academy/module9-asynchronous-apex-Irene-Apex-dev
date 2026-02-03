@@ -29,7 +29,10 @@ public with sharing class NextStepFuture {
      */
     @future
     public static void updateNextStep () {
-        List<Account> accounts = [SELECT Id, Name, Next_Step__c FROM Account];
+        List<Account> accounts = [
+            SELECT Id, Name, Next_Step__c 
+            FROM Account
+        ];
 
         for (Account account : accounts) {
             account.Next_Step__c = 'Meeting in the future';
@@ -37,7 +40,11 @@ public with sharing class NextStepFuture {
 
         update accounts;
 
-        List<Opportunity> opps = [SELECT Id, Name, NextStep FROM Opportunity];
+
+        List<Opportunity> opps = [
+            SELECT Id, Name, NextStep 
+            FROM Opportunity
+        ];
 
         for (Opportunity opp : opps) {
             opp.NextStep = 'Meeting in the future';
